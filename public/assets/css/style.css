@@ -1,0 +1,61 @@
+.m-rl-0{ margin-right: 0; margin-left: 0; }
+.m-t-10{ margin-top: 10px; }
+
+/* Projects Page */
+.projects-box .project-box{ cursor: pointer; }
+.projects-box .project-box .widget-header .widget-title{ display: inline-block; }
+.projects-box .project-box .widget-header ul{ float: right; }
+
+.projects-box .project-box .widget-body .project-box-desc{
+    min-height: 75px;
+}
+.projects-box .project-box  .actions-box-project button{
+    margin: 10px auto;
+
+}
+.users-project-box{ margin: 10px; }
+.users-project-box li {
+    float: left;
+    margin: 5px;
+}
+.users-project-box li img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    padding: 1px;
+}
+.popover.user-project-box img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    padding: 1px;
+}
+.popover.user-project-box .user-content {
+    width: 150px;
+    text-align: center;
+    margin: 10px;
+}
+.popover.user-project-box .popover-title {
+    border-radius: 0;
+    border: 0;
+    text-align: center;
+}
+
+.file-attached li{
+    float: left;
+    margin: 5px ;
+}
+
+.avatar.avatar-circle img{
+    border: 1px solid;
+}
+.file-manager .gallery-item{
+    height: 300px;
+}
+.file-manager  .gallery-item .thumb {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
