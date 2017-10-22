@@ -14,7 +14,7 @@
                     <h4 class="m-b-md">Project Structure</h4>
                     <form method="post" >
                         <div class="structures-container">
-                            @if($struct && count($struct->inputs))
+                            @if(count($struct->inputs))
                                 @foreach($struct->inputs as $key => $input)
                                 <div class="structure">
                                     <div class="form-group row m-rl-0 ">

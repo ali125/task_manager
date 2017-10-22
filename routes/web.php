@@ -31,6 +31,7 @@ Route::get('/projects/view/{project_id}', 'ProjectsController@show')->name('view
 Route::get('/projects/change_status/{project_id}', 'ProjectsController@change_status')->name('change_status_project');
 
 
+
 // Tasks Root
 Route::get('/tasks/all', 'TaskController@index')->name('all_tasks');
 Route::get('/tasks/{project_id}', 'TaskController@list')->name('tasks');
@@ -61,3 +62,5 @@ Route::get('/files', 'FileController@index')->name('file_manager');
 // Settings
 Route::get('/projects/structure', 'ProjectsController@structure')->name('projects_structure');
 Route::post('/projects/structure', 'ProjectsController@structure')->name('set_projects_structure');
+Route::get('/projects/structure/{project_id}', 'ProjectsController@edit_structure')->name('edit_structure_project');
+Route::post('/projects/structure/{project_id}', 'ProjectsController@edit_structure')->name('update_structure_project');

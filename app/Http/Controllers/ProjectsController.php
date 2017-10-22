@@ -46,9 +46,12 @@ class ProjectsController extends Controller
     public function new(Request $request){
         $structures = new MetaProject();
         $structs = $structures->get_struct_global(Auth::id());
-        $structs->inputs = unserialize($structs->inputs);
-        $data['structs'] = $structs->inputs;
-        
+        $data['structs'] = array();
+        if($structs){
+            $structs->inputs = unserialize($structs->inputs);
+            $data['structs'] = $structs->inputs;
+        }
+        // dd($structs->inputs);
         if($request->isMethod('post')){
             $this->validate($request, array(
                 'title' => 'required|min:3'
@@ -58,15 +61,15 @@ class ProjectsController extends Controller
             $project->description = $request->input('description');
             $project->options = serialize($request->input('options'));
             $project->save();
-            
-            $project_meta = new MetaProject();
-            $project_meta->meta_key = 'structure_project';
-            $project_meta->meta_value = serialize($structs);
-            $project_meta->type = 'individual_struct';
-            $project_meta->project_id = $project->id;
-            $project_meta->author = Auth::id();
-            $project_meta->save();
-
+            if($structs){
+                $project_meta = new MetaProject();
+                $project_meta->meta_key = 'structure_project';
+                $project_meta->meta_value = serialize($structs);
+                $project_meta->type = 'individual_struct';
+                $project_meta->project_id = $project->id;
+                $project_meta->author = Auth::id();
+                $project_meta->save();
+            }
             $project->users()->attach(Auth::id());
             
             return redirect()->route('projects');
@@ -99,9 +102,12 @@ class ProjectsController extends Controller
         }
         $structures = new MetaProject();
         $structs = $structures->get_struct($project_id);
-        $structs->inputs = unserialize($structs->inputs);
-        $data['structs'] = $structs->inputs;
-        // dd($structs->inputs);
+        $data['structs'] = array();
+        if($structs){
+            $structs->inputs = unserialize($structs->inputs);
+            $data['structs'] = $structs->inputs;
+        }
+        // dd($data);
         $data['modify'] = 1;
         return view('dashboard/project/edit', $data);
     }
@@ -117,7 +123,10 @@ class ProjectsController extends Controller
         $project = Project::find($project_id);
         $project->status = ($project->status) ? 0 : 1;
         $project->save();
-        return redirect()->route('projects');
+        if($project->status)
+            return redirect()->route('change_status_project');
+        else
+            return redirect()->route('projects');
     }
 
     public function show($project_id){
@@ -137,7 +146,7 @@ class ProjectsController extends Controller
     }
 
     // Project Structure
-    public function structure(Request $request, $project_id = 0){
+    public function structure(Request $request){
         $structure = new MetaProject();
         $get_struct = $structure->get_struct_global(Auth::id());
         if($get_struct)
@@ -146,16 +155,15 @@ class ProjectsController extends Controller
         $data['struct'] = $get_struct;
         
         if($request->isMethod('post')){
-            // dd($request->all());
             $struct = $request->input('struct');
+            
             $structs = array();
             if($struct){
                 foreach($struct as $key => $val ){
                     $structs[] = array_merge(array('id' => $key), $val) ;
                 }
             }
-        //    dd($structs);
-            // dd(serialize($structs));
+            
             if($get_struct)
                 $project_meta = MetaProject::find($get_struct->id);
             else
@@ -173,4 +181,39 @@ class ProjectsController extends Controller
        
         return view('dashboard/project/structure', $data);
     }
+
+    public function edit_structure(Request $request, $project_id){
+        $structure = new MetaProject();
+        $get_struct = $structure->get_struct($project_id);
+        if($get_struct)
+            $get_struct->inputs = unserialize($get_struct->inputs);
+            dd($get_struct->inputs);
+        $data['struct'] = $get_struct->inputs;
+        
+        if($request->isMethod('post')){
+            
+
+            $struct = $request->input('struct');
+            $structs = array();
+            if($struct){
+                foreach($struct as $key => $val ){
+                    $structs[] = array_merge(array('id' => $key), $val);
+                }
+            }
+            $structs_data = array();
+            $structs_data = (object)$structs_data;
+            $structs_data = $structs;
+            // dd($structs_data);
+            $project_meta = MetaProject::find($get_struct->id);
+                
+            $project_meta->meta_value = serialize($structs_data);
+
+            
+            $project_meta->save();
+            return redirect()->back();
+        }
+
+        return view('dashboard/project/edit_structure', $data);
+    }
+
 }

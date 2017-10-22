@@ -52,7 +52,12 @@
                     </a>
                     </li>
                 @endif
-
+                <li>
+                    <a class="text-color" href="{{ route('edit_structure_project', ['project_id' => $project->id]) }}">
+                        <span class="m-r-xs"><i class="fa fa-archive"></i></span>
+                        <span>Edit Structure</span>
+                    </a>
+                </li>
                 <li role="separator" class="divider"></li>
                 <li>
                     <a class="text-color" href="{{ route('delete_project', ['project_id' => $project->id]) }}">

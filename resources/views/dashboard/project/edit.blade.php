@@ -27,32 +27,33 @@
                             <textarea class="form-control" name="description" id="description" placeholder="Project Description">{{ (!$modify) ? old('description') : $project->description }}</textarea>
                         </div>
                     </div>
-                    
-                    @foreach($structs->inputs as $key => $input)
-                    <div class="form-group">
-                        <label for="{{$key}}" class="col-sm-3 col-md-2 control-label">{{$input['title']}}:</label>
-                        <div class="col-sm-9 col-md-10">
-                            <input type="hidden" name="options[{{$key}}][title]" value="{{$input['title']}}" />
-                            @if($input['type'] == 'textarea')
-                                <textarea class="form-control" name="options[{{$key}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ $project->options[$input['name']]['value']  }}</textarea>
-                                
-                            @elseif($input['type'] == 'select')
-                                <select class="form-control" name="options[{{$key}}][value]" id="{{$key}}">
-                          
-                                </select>
-                            @elseif($input['type'] == 'radio')
-                            @elseif($input['type'] == 'checkbox')
-                            @elseif($input['type'] == 'text')
-                                <input type="text" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
-                            @elseif($input['type'] == 'fileuploader')
-                                <input type="file" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
-                            @elseif($input['type'] == 'date')
-                                <input type="date" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}"  placeholder="{{$input['title']}}">    
-                            @endif
+                    @if($structs && count($structs->inputs))
+                        @foreach($structs->inputs as $key => $input)
+                        <div class="form-group">
+                            <label for="{{$key}}" class="col-sm-3 col-md-2 control-label">{{$input['title']}}:</label>
+                            <div class="col-sm-9 col-md-10">
+                                <input type="hidden" name="options[{{$input['name']}}][title]" value="{{$input['title']}}" />
+                                @if($input['type'] == 'textarea')
+                                    <textarea class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ $project->options[$input['name']]['value']  }}</textarea>
+                                    
+                                @elseif($input['type'] == 'select')
+                                    <select class="form-control" name="options[{{$input['name']}}[value]" id="{{$key}}">
                             
+                                    </select>
+                                @elseif($input['type'] == 'radio')
+                                @elseif($input['type'] == 'checkbox')
+                                @elseif($input['type'] == 'text')
+                                    <input type="text" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                                @elseif($input['type'] == 'fileuploader')
+                                    <input type="file" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                                @elseif($input['type'] == 'date')
+                                    <input type="date" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}"  placeholder="{{$input['title']}}">    
+                                @endif
+                                
+                            </div>
                         </div>
-                    </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                     <div class="row">
                         <div class="col-sm-9 col-sm-offset-3">
                             <button type="submit" class="btn btn-success">Add Project</button>
