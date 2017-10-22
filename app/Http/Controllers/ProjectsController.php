@@ -61,6 +61,7 @@ class ProjectsController extends Controller
             $project->description = $request->input('description');
             $project->options = serialize($request->input('options'));
             $project->save();
+            $project->users()->attach(Auth::id());
             if($structs){
                 $project_meta = new MetaProject();
                 $project_meta->meta_key = 'structure_project';
@@ -70,7 +71,7 @@ class ProjectsController extends Controller
                 $project_meta->author = Auth::id();
                 $project_meta->save();
             }
-            $project->users()->attach(Auth::id());
+            
             
             return redirect()->route('projects');
         }
@@ -116,6 +117,10 @@ class ProjectsController extends Controller
         $project = Project::find($project_id);
         $project->users()->detach(Auth::id());
         $project->delete();
+        $structure = new MetaProject();
+        $struct = $structure->get_struct($project_id);
+        $project_meta = MetaProject::find($struct->id);
+        $project_meta->delete();
         return redirect()->route('projects');
     }
 
@@ -124,7 +129,7 @@ class ProjectsController extends Controller
         $project->status = ($project->status) ? 0 : 1;
         $project->save();
         if($project->status)
-            return redirect()->route('change_status_project');
+            return redirect()->route('projects_archive');
         else
             return redirect()->route('projects');
     }
@@ -187,7 +192,7 @@ class ProjectsController extends Controller
         $get_struct = $structure->get_struct($project_id);
         if($get_struct)
             $get_struct->inputs = unserialize($get_struct->inputs);
-            dd($get_struct->inputs);
+            // dd($get_struct->inputs);
         $data['struct'] = $get_struct->inputs;
         
         if($request->isMethod('post')){
@@ -202,7 +207,8 @@ class ProjectsController extends Controller
             }
             $structs_data = array();
             $structs_data = (object)$structs_data;
-            $structs_data = $structs;
+            $structs_data->id = $get_struct->inputs->id;
+            $structs_data->inputs = $structs;
             // dd($structs_data);
             $project_meta = MetaProject::find($get_struct->id);
                 
