@@ -14,9 +14,9 @@
                     <h4 class="m-b-md">Project Structure</h4>
                     <form method="post" >
                         <div class="structures-container">
-                            @if($struct)
-                            <div class="structure">
+                            @if(count($struct->inputs))
                                 @foreach($struct->inputs as $key => $input)
+                                <div class="structure">
                                     <div class="form-group row m-rl-0 ">
                                         <div class="col-xs-12 col-sm-5">
                                             <label for="title{{$key}}">Title</label>
@@ -35,14 +35,17 @@
                                             </select>
                                         </div>
                                         <div class="col-xs-12 col-sm-2">
-                                            <label></label>
                                             <div>
-                                            <button class="btn btn-success add_new_structure">New Structure</button>
+                                                <label></label>
+                                                <div>
+                                                    <button class="btn btn-success add_new_structure"><span class="fa fa-plus"></span></button>
+                                                    <button class="btn btn-danger remove_structure"><span class="fa fa-minus"></span></button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 @endforeach
-                            </div>
                             @else
                             <div class="structure">
                                 <div class="form-group row m-rl-0 ">
@@ -52,7 +55,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-5">
                                         <label for="type1">Type</label>
-                                        <select class="form-control" id="type1" name="struct[0][type]" >
+                                        <select class="form-control selecting-type" id="type1" name="struct[0][type]" >
                                             <option value="text"> Text </option>
                                             <option value="select"> Select </option>
                                             <option value="radio"> Radio </option>
@@ -62,6 +65,7 @@
                                             <option value="date"> Date </option>
                                         </select>
                                     </div>
+                                    <input type="hidden" class="struct-name" name="struct[0][name]" data-key="0" value="text_0" />
                                     <div class="col-xs-12 col-sm-2">
                                         <label></label>
                                         <div>

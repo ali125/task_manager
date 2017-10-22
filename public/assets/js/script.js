@@ -84,7 +84,7 @@ $(".structures-container").on('click', '.add_new_structure', function(e){
         html_struct += '<input type="text" name="struct['+struct_count+'][title]" class="form-control" id="title1" placeholder="Example: End Date">';
         html_struct += '</div><div class="col-xs-12 col-sm-5">';
         html_struct += '<label for="type1">Type</label>';
-        html_struct += '<select class="form-control" name="struct['+struct_count+'][type]" id="type1" >';
+        html_struct += '<select class="form-control selecting-type" name="struct['+struct_count+'][type]" id="type1" >';
         html_struct += '<option value="text"> Text </option>';
         html_struct += '<option value="select"> Select </option>';
         html_struct += '<option value="radio"> Radio </option>';
@@ -93,8 +93,9 @@ $(".structures-container").on('click', '.add_new_structure', function(e){
         html_struct += '<option value="fileuploader"> File Uploader </option>';
         html_struct += '<option value="date"> Date </option>';
         html_struct += '</select></div>';
+        html_struct += '<input type="hidden" class="struct-name" name="struct['+struct_count+'][name]" data-key="'+struct_count+'" value="text_'+struct_count+'" />';
         html_struct += '<div class="col-xs-12 col-sm-2"><label></label>';
-        html_struct += '<div><button class="btn btn-success remove_structure"><span class="fa fa-minus"></span></button></div>';
+        html_struct += '<div><button class="btn btn-danger remove_structure"><span class="fa fa-minus"></span></button></div>';
         html_struct += '</div></div></div>';
         $(".structures-container").append(html_struct);
     }else{
@@ -107,3 +108,11 @@ $(function () {
   // $('[data-toggle="popover"]').popover();
 //    $('[data-toggle="tooltip"]').tooltip()
 })
+
+$(".structures-container").on('change', '.selecting-type' , function(){
+    var type = $(this).val();
+    console.log(type);
+    var name = $(this).parentsUntil(".structure").find(".struct-name");
+    var key = $(name).data('key');
+    $(name).val(type+'_'+key);
+});

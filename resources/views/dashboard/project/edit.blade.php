@@ -27,28 +27,27 @@
                             <textarea class="form-control" name="description" id="description" placeholder="Project Description">{{ (!$modify) ? old('description') : $project->description }}</textarea>
                         </div>
                     </div>
-                    @foreach($project->options as $key =>$option)
+                    
+                    @foreach($structs->inputs as $key => $input)
                     <div class="form-group">
-                        <label for="{{$key}}" class="col-sm-3 col-md-2 control-label">{{$option['title']}}:</label>
+                        <label for="{{$key}}" class="col-sm-3 col-md-2 control-label">{{$input['title']}}:</label>
                         <div class="col-sm-9 col-md-10">
-                            <input type="hidden" name="options[{{$key}}][title]" value="{{$option['title']}}" />
-                            @if(strstr($key,'textarea') != false)
-                                <textarea class="form-control" name="options[{{$key}}][value]" id="{{$key}}" placeholder="{{$option['title']}}" >{{$option['value']}}</textarea>
+                            <input type="hidden" name="options[{{$key}}][title]" value="{{$input['title']}}" />
+                            @if($input['type'] == 'textarea')
+                                <textarea class="form-control" name="options[{{$key}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ $project->options[$input['name']]['value']  }}</textarea>
                                 
-                            @elseif(strstr($key,'select') != false)
+                            @elseif($input['type'] == 'select')
                                 <select class="form-control" name="options[{{$key}}][value]" id="{{$key}}">
-                                    @foreach({{$option['value']}} as $key => $option)
-                                        <option value="{{$option['value']}}">{{$option}}</option>
-                                    @endforeach
+                          
                                 </select>
-                            @elseif(strstr($key,'radio') != false)
-                            @elseif(strstr($key,'checkbox') != false)
-                            @elseif(strstr($key,'text') != false)
-                                <input type="text" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{$option['value']}}" placeholder="{{$option['title']}}">
-                            @elseif(strstr($key,'fileuploader') != false)
-                                <input type="file" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{$option['value']}}" placeholder="{{$option['title']}}">
-                            @elseif(strstr($key,'date') != false)
-                                <input type="date" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{$option['value']}}"  placeholder="{{$option['title']}}">    
+                            @elseif($input['type'] == 'radio')
+                            @elseif($input['type'] == 'checkbox')
+                            @elseif($input['type'] == 'text')
+                                <input type="text" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                            @elseif($input['type'] == 'fileuploader')
+                                <input type="file" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                            @elseif($input['type'] == 'date')
+                                <input type="date" class="form-control" name="options[{{$key}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}"  placeholder="{{$input['title']}}">    
                             @endif
                             
                         </div>
