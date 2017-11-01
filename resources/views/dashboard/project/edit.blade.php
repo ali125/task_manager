@@ -34,20 +34,30 @@
                             <div class="col-sm-9 col-md-10">
                                 <input type="hidden" name="options[{{$input['name']}}][title]" value="{{$input['title']}}" />
                                 @if($input['type'] == 'textarea')
-                                    <textarea class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ $project->options[$input['name']]['value']  }}</textarea>
+                                    <textarea class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}</textarea>
                                     
                                 @elseif($input['type'] == 'select')
                                     <select class="form-control" name="options[{{$input['name']}}[value]" id="{{$key}}">
-                            
+                                        @foreach($input['option'] as $key_option => $option)
+                                            <option {{ ($key_option == $project->options[$input['name']]['value']) ? 'selected' : '' }} value="{{ $key_option }}">{{ $option }}</option>
+                                        @endforeach
                                     </select>
                                 @elseif($input['type'] == 'radio')
+                                    @foreach($input['option'] as $key_option => $option)
+                                        <input type="radio" name="options[{{$input['name']}}[value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
+                                    @endforeach
                                 @elseif($input['type'] == 'checkbox')
+                                    @foreach($input['option'] as $key_option => $option)
+                                        <input type="checkbox" name="options[{{$input['name']}}[value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
+                                    @endforeach
                                 @elseif($input['type'] == 'text')
-                                    <input type="text" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                                    <input type="text" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}" placeholder="{{$input['title']}}">
                                 @elseif($input['type'] == 'fileuploader')
-                                    <input type="file" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}" placeholder="{{$input['title']}}">
+                                    <input type="file" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}" placeholder="{{$input['title']}}">
                                 @elseif($input['type'] == 'date')
-                                    <input type="date" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ $project->options[$input['name']]['value']  }}"  placeholder="{{$input['title']}}">    
+                                    <input type="date" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}"  placeholder="{{$input['title']}}">    
+                                @elseif($input['type'] == 'number')
+                                    <input type="number" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}"  placeholder="{{$input['title']}}">    
                                 @endif
                                 
                             </div>

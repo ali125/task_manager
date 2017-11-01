@@ -29,13 +29,13 @@
                     </div>
                     @foreach($structs as $struct)
                     <div class="form-group">
-                        <label for="{{$struct['type'] .'_'. $struct['id']}}" class="col-sm-3 col-md-2 control-label">{{$struct['title']}}:</label>
+                        <label for="{{$struct['name']}}" class="col-sm-3 col-md-2 control-label">{{$struct['title']}}:</label>
                         <div class="col-sm-9 col-md-10">
-                            <input type="hidden" name="options[{{$struct['type'] .'_'. $struct['id']}}][title]" value="{{$struct['title']}}" />
+                            <input type="hidden" name="options[{{$struct['name']}}][title]" value="{{$struct['title']}}" />
                             @if($struct['type'] == 'text')
-                                <input type="text" class="form-control" name="options[{{$struct['type'] .'_'. $struct['id']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">
+                                <input type="text" class="form-control" name="options[{{$struct['name']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">
                             @elseif($struct['type'] == 'select') 
-                                <select class="form-control" name="options[{{$struct['type'] .'_'. $struct['id']}}][value]" id="{{$struct['type'] . $struct['id']}}">
+                                <select class="form-control" name="options[{{$struct['name']}}][value]" id="{{$struct['type'] . $struct['id']}}">
                                     @foreach($struct['option'] as $key => $option)
                                         <option value="{{$key}}">{{$option}}</option>
                                     @endforeach
@@ -43,11 +43,11 @@
                             @elseif($struct['type'] == 'radio')
                             @elseif($struct['type'] == 'checkbox')
                             @elseif($struct['type'] == 'textarea')
-                                <textarea class="form-control" name="options[{{$struct['type'] .'_'. $struct['id']}}][value]" id="{{$struct['type'] . $struct['id']}}" placeholder="{{$struct['title']}}" ></textarea>
+                                <textarea class="form-control" name="options[{{$struct['name']}}][value]" id="{{$struct['type'] . $struct['id']}}" placeholder="{{$struct['title']}}" ></textarea>
                             @elseif($struct['type'] == 'fileuploader')
-                                <input type="file" class="form-control" name="options[{{$struct['type'] .'_'. $struct['id']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">
+                                <input type="file" class="form-control" name="options[{{$struct['name']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">
                             @elseif($struct['type'] == 'date')
-                                <input type="date" class="form-control" name="options[{{$struct['type'] .'_'. $struct['id']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">    
+                                <input type="date" class="form-control" name="options[{{$struct['name']}}][value]" id="{{$struct['type'] . $struct['id']}}"  placeholder="{{$struct['title']}}">    
                             @endif
                         </div>
                     </div>

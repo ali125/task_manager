@@ -157,9 +157,11 @@ class ProjectsController extends Controller
         if($get_struct)
             $get_struct->inputs = unserialize($get_struct->inputs);
             
+        // dd($get_struct);
         $data['struct'] = $get_struct;
         
         if($request->isMethod('post')){
+           
             $struct = $request->input('struct');
             
             $structs = array();
@@ -196,7 +198,7 @@ class ProjectsController extends Controller
         $data['struct'] = $get_struct->inputs;
         
         if($request->isMethod('post')){
-            
+        
 
             $struct = $request->input('struct');
             $structs = array();

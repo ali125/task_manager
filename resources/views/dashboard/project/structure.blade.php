@@ -32,6 +32,7 @@
                                                 <option {{ ($input['type'] == 'textarea') ? 'selected' : ''  }} value="textarea"> Textarea </option>
                                                 <option {{ ($input['type'] == 'fileuploader') ? 'selected' : ''  }} value="fileuploader"> File Uploader </option>
                                                 <option {{ ($input['type'] == 'date') ? 'selected' : ''  }} value="date"> Date </option>
+                                                <option {{ ($input['type'] == 'number') ? 'selected' : ''  }} value="number"> Number </option>
                                             </select>
                                         </div>
                                         <input type="hidden" class="struct-name" name="struct[{{$key}}][name]" data-key="{{$key}}" value="{{$input['name']}}" />
@@ -45,6 +46,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(isset($input['option']))
+                                    <div class="options-structure">
+                                        @foreach($input['option'] as $key_option => $option)
+                                        <div class="row m-rl-0 form-group option-structure">
+                                            <div class="col-xs-8 col-sm-4 ">
+                                                <input type="text" class="form-control" name="struct[{{$key}}][option][]" placeholder="option value" value="{{ $option }}">
+                                            </div>
+                                            <button class="btn btn-danger remove_option"><span class="fa fa-minus"></span></button>
+                                        </div>
+                                        @endforeach
+                                        <div class="row m-rl-0">
+                                            <div class="col-xs-8 col-sm-4 ">
+                                                <button class="btn btn-success add_new_option">add option <span class="fa fa-plus"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             @else
@@ -64,6 +82,7 @@
                                             <option value="textarea"> Textarea </option>
                                             <option value="fileuploader"> File Uploader </option>
                                             <option value="date"> Date </option>
+                                            <option value="number"> Number </option>
                                         </select>
                                     </div>
                                     <input type="hidden" class="struct-name" name="struct[0][name]" data-key="0" value="text_0" />

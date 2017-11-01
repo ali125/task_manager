@@ -1,105 +1,70 @@
 @extends('layouts/dashboard')
 
 @section('content')
-<div class="row">
-    <div class="col-xs-12">
-        <div class="widget">
-            <header class="widget-header">
-                <h4 class="widget-title">{{ $project->title }}</h4>
-            </header><!-- .widget-header -->
-            <hr class="widget-separator">
-            <div class="widget-body">
-                <div class="m-b-lg">
-                    <strong> Description:</strong><small>
-                        {{ $project->description }}
-                    </small>
-                    @foreach($project->options as $key => $option)
-                    <br>
-                    <strong>{{$option['title']}}: </strong><small> {{ $option['value']  }} </small>
+
+        <div class="widget who-to-follow-widget row view-project">
+            <div class="widget-header p-h-lg p-v-md">
+                <h4 class="widget-title">Tasks List</h4>
+            </div>
+            <hr class="widget-separator m-0">
+            <div class="col-md-9">
+                <div class="widget" style="box-shadow: none;">
+                    <div class="media-group">
+                    @foreach($tasks as $key => $task)
+                        <a href="{{ route('view_task', ['task_id' => $task->id]) }}" class="media-group-item">
+                            <div class="media">
+                                <div class="media-body ">
+                                    <div class="media-heading">
+                                        <h5 style="display: inline-block;">{{ $task->title }} </h5>
+                                        @if($task->status == 1) <span class="label label-default">open</span>
+                                        @elseif($task->status == 2) <span class="label label-warning">as soon</span> 
+                                        @elseif($task->status == 3) <span class="label label-info">pendding</span> 
+                                        @else <span class="label label-success">close</span> 
+                                        @endif
+                                    </div>
+                                    <small class="media-meta">{{ $task->description }}</small>
+                                </div>
+                            </div>
+                        </a>
                     @endforeach
-                    <br>
-                    <strong>Progress: </strong><small> {{ $project->tasks_done . ' / ' . $project->tasks_count  }} </small>
-                
-                    
+                        
+                    </div>
                 </div>
-            </div><!-- .widget-body -->
-        </div><!-- .widget -->
-    </div>
-    <div class="col-xs-12 col-sm-6">
-        <div class="widget">
-            <header class="widget-header">
-                <h4 class="widget-title pull-left">Project Tasks</h4>
-                <a href="{{ route('new_task', ['project_id' => $project->id]) }}" type="button" class="btn pull-right btn-xs btn-success">Add New Task</a>
-                <a href="{{ route('tasks', ['project_id' => $project->id]) }}" type="button" class="btn pull-right btn-xs btn-success">All Tasks</a>
-            </header><!-- .widget-header -->
-            <hr class="widget-separator">
-            <div class="widget-body">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        
-                        @foreach($tasks as $key => $task)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $task->title }}</td>
-                            <td>{{ $task->description }}</td>
-                            <td>{{ ($task->status == 1) ? 'open' : (($task->status == 2) ? 'as soon' : (($task->status == 3) ? 'pendding' : 'close')) }}</td>
-                            <td>
-                                <a href="{{ route('edit_task', ['project_id' => $task->id]) }}">
-                                    <span class="fa fa-pencil"></span>
-                                </a> 
-                                <a href="{{ route('delete_task', ['task_id' => $task->id]) }}">
-                                    <span class="fa fa-trash"></span>
-                                </a>
-                                <a href="{{ route('view_task', ['task_id' => $task->id]) }}">
-                                    <span class="fa fa-eye"></span>
-                                </a>
-                            </td>
-                            
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="add-task-btn">
+                    <div class="line-btn"></div>
+                    <a href="{{ route('new_task', ['project_id' => $project->id]) }}" class="btn mw-md btn-success">New Task</a>             
+                </div>
+            
             </div>
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-        <div class="widget">
-            <header class="widget-header">
-            <h4 class="widget-title pull-left">Project Users</h4>
-                <a href="{{ route('new_user', ['project_id' => $project->id]) }}" type="button" class="btn pull-right btn-xs btn-success">Add New User</a>
-            </header><!-- .widget-header -->
-            <hr class="widget-separator">
-            <div class="widget-body">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Mobile</th>
-                            <th>Role</th>
-                        </tr>
-                        
-                        @foreach($users as $key => $user)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{  call_user($user) }}</td>
-                            <td>{{ $user->mobile }}</td>
-                            <td>{{ role_type($user->role) }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
+            <div class="col-md-3">
+                <div class="widget-header p-h-lg p-v-md">
+                    <h4 class="widget-title">Project Info</h4>
+                </div>
+                <hr class="widget-separator m-0 m-b-sm">
+                <ul class="list-group no-border">
+                    <li class="list-group-item">
+                        <span> Title:</span>
+                        <small>{{ $project->title }}</small>
+                    </li>
+                    <li class="list-group-item">
+                        <span> Description:</span>
+                        <small>{{ $project->description }}</small>
+                    </li>
+                    @foreach($project->options as $key => $option)
+                    <li class="list-group-item"><span>{{$option['title']}}: </span><small> {{ $option['value']  }} </small></li>
+                    @endforeach
+                    <li class="list-group-item">
+                        <span>Progress: </span><small> {{ $project->tasks_done . ' / ' . $project->tasks_count  }} </small>
+                    </li>
+                </ul>
+                
+                <div class="widget-header p-h-lg p-v-md">
+                    <h4 class="widget-title">Users in Project</h4>
+                </div>
+                <hr class="widget-separator m-0 m-b-sm">
+                @foreach($users as $key => $user)
+                    <span class="label label-default menu-label">{{  call_user($user) }}</span>
+                @endforeach
+            </div><!-- .widget -->
+        </div><!-- END column -->
 @stop

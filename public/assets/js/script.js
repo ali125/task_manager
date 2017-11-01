@@ -92,6 +92,7 @@ $(".structures-container").on('click', '.add_new_structure', function(e){
         html_struct += '<option value="textarea"> Textarea </option>';
         html_struct += '<option value="fileuploader"> File Uploader </option>';
         html_struct += '<option value="date"> Date </option>';
+        html_struct += '<option value="number"> Number </option>';
         html_struct += '</select></div>';
         html_struct += '<input type="hidden" class="struct-name" name="struct['+struct_count+'][name]" data-key="'+struct_count+'" value="text_'+struct_count+'" />';
         html_struct += '<div class="col-xs-12 col-sm-2"><label></label>';
