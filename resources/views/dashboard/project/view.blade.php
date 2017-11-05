@@ -4,7 +4,8 @@
 
         <div class="widget who-to-follow-widget row view-project">
             <div class="widget-header p-h-lg p-v-md">
-                <h4 class="widget-title">Tasks List</h4>
+                <h4 class="widget-title pull-left">Tasks List</h4> 
+                <a href="{{ route('project_file', ['project_id' => $project->id]) }}" class="btn mw-md btn-success btn-xs pull-right">Project's Files</a> 
             </div>
             <hr class="widget-separator m-0">
             <div class="col-md-9">
@@ -38,7 +39,8 @@
             </div>
             <div class="col-md-3">
                 <div class="widget-header p-h-lg p-v-md">
-                    <h4 class="widget-title">Project Info</h4>
+                    <h4 class="widget-title pull-left">Project Info</h4>
+                    <a href="{{ route('edit_structure_project', ['project_id' => $project->id]) }}" class="btn mw-md btn-success btn-xs pull-right">Edit Project</a> 
                 </div>
                 <hr class="widget-separator m-0 m-b-sm">
                 <ul class="list-group no-border">
@@ -50,9 +52,11 @@
                         <span> Description:</span>
                         <small>{{ $project->description }}</small>
                     </li>
-                    @foreach($project->options as $key => $option)
-                    <li class="list-group-item"><span>{{$option['title']}}: </span><small> {{ $option['value']  }} </small></li>
-                    @endforeach
+                    @if($project->options != null)
+                        @foreach($project->options as $key => $option)
+                        <li class="list-group-item"><span>{{$option['title']}}: </span><small> {{ $option['value']  }} </small></li>
+                        @endforeach
+                    @endif
                     <li class="list-group-item">
                         <span>Progress: </span><small> {{ $project->tasks_done . ' / ' . $project->tasks_count  }} </small>
                     </li>

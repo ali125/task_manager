@@ -17,10 +17,8 @@ class CreateProjectsTable extends Migration
             $table->increments('id')->unsigned()->index();
             $table->string('title');
             $table->text('description');
-            $table->boolean('status');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
-            $table->textarea('options');
+            $table->boolean('status')->default(0);
+            $table->text('options');
             $table->timestamps();
         });
 

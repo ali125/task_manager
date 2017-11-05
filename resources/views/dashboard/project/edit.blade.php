@@ -37,18 +37,18 @@
                                     <textarea class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" placeholder="{{$input['title']}}" >{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}</textarea>
                                     
                                 @elseif($input['type'] == 'select')
-                                    <select class="form-control" name="options[{{$input['name']}}[value]" id="{{$key}}">
+                                    <select class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}">
                                         @foreach($input['option'] as $key_option => $option)
                                             <option {{ ($key_option == $project->options[$input['name']]['value']) ? 'selected' : '' }} value="{{ $key_option }}">{{ $option }}</option>
                                         @endforeach
                                     </select>
                                 @elseif($input['type'] == 'radio')
                                     @foreach($input['option'] as $key_option => $option)
-                                        <input type="radio" name="options[{{$input['name']}}[value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
+                                        <input type="radio" name="options[{{$input['name']}}][value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
                                     @endforeach
                                 @elseif($input['type'] == 'checkbox')
                                     @foreach($input['option'] as $key_option => $option)
-                                        <input type="checkbox" name="options[{{$input['name']}}[value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
+                                        <input type="checkbox" name="options[{{$input['name']}}][value]" {{ (isset($project->options[$input['name']]['value']) && $key_option == $project->options[$input['name']]['value']) ? 'checked' : '' }} value="{{ $key_option }}" /> {{ $option }}
                                     @endforeach
                                 @elseif($input['type'] == 'text')
                                     <input type="text" class="form-control" name="options[{{$input['name']}}][value]" id="{{$key}}" value="{{ (isset($project->options[$input['name']]['value'])) ? $project->options[$input['name']]['value'] : ''  }}" placeholder="{{$input['title']}}">

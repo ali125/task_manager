@@ -81,7 +81,6 @@
           <ul class="submenu">
             <li><a href="{{ route('new_project') }}"><span class="menu-text">Add New Project</span></a></li>
             <li><a href="{{ route('projects') }}"><span class="menu-text">Projects List</span></a></li>
-            <li><a href="{{ route('projects_archive') }}"><span class="menu-text">Archive</span></a></li>
             <li><a href="{{ route('projects_structure') }}"><span class="menu-text">Projects Structure</span></a></li>
           </ul>
         </li>
@@ -101,6 +100,17 @@
             <i class="menu-icon zmdi zmdi-file-text zmdi-hc-lg"></i>
             <span class="menu-text">File Manager</span>
           </a>
+        </li>
+        <li class="has-submenu">
+          <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon zmdi zmdi-puzzle-piece zmdi-hc-lg"></i>
+            <span class="menu-text">Report</span>
+            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+          </a>
+          <ul class="submenu">
+            <li><a href="{{ route('new_report') }}"><span class="menu-text">Add New Report</span></a></li>
+            <li><a href="{{ route('reports') }}"><span class="menu-text">Reports List</span></a></li>
+          </ul>
         </li>
 
         <li class="menu-separator"><hr></li>

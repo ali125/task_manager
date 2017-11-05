@@ -5,16 +5,18 @@
     <div class="col-xs-12">
         <div class="widget">
             <header class="widget-header">
-                <h4 class="widget-title">{{ $task->title }} 
+                <h4 class="widget-title pull-left">{{ $task->title }} 
                     @if ($task->status == 1) 
-                        <span class="label label-primary">Open</span></h4>
+                        <span class="label label-primary">Open</span>
                     @elseif($task->status == 2)
-                        <span class="label label-warning">Soon</span></h4>
+                        <span class="label label-warning">Soon</span>
                     @elseif($task->status == 3)
-                        <span class="label label-info">Pendding</span></h4>
+                        <span class="label label-info">Pendding</span>
                     @else
-                        <span class="label label-success">Close</span></h4>
+                        <span class="label label-success">Close</span>
                     @endif
+                </h4>
+                <a href="{{ route('task_file', ['task_id' => $task->id]) }}" class="btn mw-md btn-success btn-xs pull-right">Task's Files</a> 
             </header><!-- .widget-header -->
             <hr class="widget-separator">
             <div class="widget-body">

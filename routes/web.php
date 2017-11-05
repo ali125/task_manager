@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('dashboard');
 
 // Projects Root
 Route::get('/projects', 'ProjectsController@index')->name('projects');
-Route::get('/archive', 'ProjectsController@archive')->name('projects_archive');
+
 
 Route::get('/projects/add', 'ProjectsController@new')->name('new_project');
 Route::post('/projects/add', 'ProjectsController@new')->name('add_project');
@@ -29,7 +29,7 @@ Route::post('/projects/edit/{project_id}', 'ProjectsController@edit')->name('edi
 Route::get('/projects/delete/{project_id}', 'ProjectsController@delete')->name('delete_project');
 Route::get('/projects/view/{project_id}', 'ProjectsController@show')->name('view_project');
 Route::get('/projects/change_status/{project_id}', 'ProjectsController@change_status')->name('change_status_project');
-
+Route::get('/projects/file/{project_id}', 'ProjectsController@file')->name('project_file');
 
 
 // Tasks Root
@@ -43,8 +43,11 @@ Route::post('/task/delete/{task_id}', 'TaskController@delete')->name('delete_tas
 Route::get('/task/{task_id}', 'TaskController@show')->name('view_task');
 Route::get('/task/edit/{task_id}', 'TaskController@edit_task')->name('edit_task');
 Route::post('/task/edit/{task_id}', 'TaskController@edit_task')->name('update_task');
+Route::get('/task/file/{task_id}', 'TaskController@file')->name('task_file');
 
 Route::post('/task/{task_id}', 'TaskController@new_message')->name('new_message_task');
+// ajax
+Route::get('/task_project/{project_id}', 'TaskController@ajax_task_project')->name('ajax_task_project');
 
 
 // Users Root
@@ -57,6 +60,14 @@ Route::post('/settings', 'UserController@edit')->name('user_update');
 
 // File Manger
 Route::get('/files', 'FileController@index')->name('file_manager');
+
+// Report
+Route::get('/report/new', 'ReportController@add')->name('new_report');
+Route::post('/report/new', 'ReportController@add')->name('new_report');
+Route::get('/report/list', 'ReportController@list')->name('reports');
+Route::get('/report/{$report_id}', 'ReportController@edit')->name('edit_report');
+Route::get('/report/delete/{$report_id}', 'ReportController@delete')->name('delete_report');
+
 
 
 // Settings

@@ -12,6 +12,11 @@ use App\File;
 class TaskController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(){
         $tasks = new Task();
         $data['tasks'] = $tasks->get_tasks_by_user(Auth::id());
@@ -200,5 +205,26 @@ class TaskController extends Controller
         
     }
 
+    public function file($task_id){
+        $task = new Task();
+        $get_task = $task->find($task_id);
+        $data['task'] = $get_task;
+        // dd($get_task);
+        $files = new File();
+        $data['files_task'] = $files->file_task($get_task->id);
+        $data['files_message'] = $files->file_message_by_task($get_task->id );
+        
+        // dd($data);
+        return view('dashboard/task/file', $data);
+    }
+
     
+    /* ========== Ajax ========== */
+
+    public function ajax_task_project($project_id){
+        $tasks_data = new Task();
+        $tasks = $tasks_data->get_tasks_by_projct($project_id );
+        $results = json_encode($tasks);
+        echo $results;
+    }    
 }

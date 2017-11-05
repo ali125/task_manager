@@ -15,6 +15,11 @@ class CreateMetaProjectsTable extends Migration
     {
         Schema::create('meta_projects', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('meta_key');
+            $table->text('meta_value');
+            $table->string('type');
+            $table->integer('project_id');
+            $table->integer('author');
             $table->timestamps();
         });
     }

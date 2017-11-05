@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Project;
+use App\File;
 use App\MetaProject;
 use App\User;
 use App\Task;
@@ -27,19 +28,16 @@ class ProjectsController extends Controller
         }
 
         $data['projects'] = $projects;
-        return view('dashboard/project/list' , $data );
-    }
 
-    public function archive(){
-        $project = new Project();
-        $projects = $project->myProjects(Auth::id(), 1);
+        $archived = new Project();
+        $projects_archived = $archived->myProjects(Auth::id(), 1);
 
-        foreach($projects as $key => $project){
+        foreach($projects_archived as $key => $project){
             $user = new User();
-            $projects[$key]->users = $user->users_by_project($project->id);
+            $projects_archived[$key]->users = $user->users_by_project($project->id);
         }
 
-        $data['projects'] = $projects;
+        $data['projects_archived'] = $projects_archived;
         return view('dashboard/project/list' , $data );
     }
 
@@ -128,10 +126,7 @@ class ProjectsController extends Controller
         $project = Project::find($project_id);
         $project->status = ($project->status) ? 0 : 1;
         $project->save();
-        if($project->status)
-            return redirect()->route('projects_archive');
-        else
-            return redirect()->route('projects');
+        return redirect()->route('projects');
     }
 
     public function show($project_id){
@@ -148,6 +143,19 @@ class ProjectsController extends Controller
         
         // dd($data);
         return view('dashboard/project/view', $data);
+    }
+
+    public function file($project_id){
+        $project = new Project();
+        $get_project = $project->details_project_id($project_id);
+        $data['project'] = $get_project;
+        
+        $files = new File();
+        $data['files_task'] = $files->file_task_by_project($get_project->id);
+        $data['files_message'] = $files->file_message_by_project($get_project->id);
+        
+        // dd($data);
+        return view('dashboard/project/file', $data);
     }
 
     // Project Structure

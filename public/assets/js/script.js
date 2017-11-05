@@ -117,3 +117,21 @@ $(".structures-container").on('change', '.selecting-type' , function(){
     var key = $(name).data('key');
     $(name).val(type+'_'+key);
 });
+
+
+function get_task_by_project(project_id){
+    var html = '';
+    $.get('/task_project/'+project_id).done(function(data){
+        var task = JSON.parse(data);
+        for(var i = 0 ; i < task.length ; i++ ){
+            html += '<option value="'+ task[i].id +'">';
+            html += task[i].title;
+            html += '</option>';
+        }
+        $("#task").html(html);
+    });
+}
+
+$("#project").on('change', function(){
+    get_task_by_project($(this).val());
+});
